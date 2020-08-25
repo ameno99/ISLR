@@ -1,0 +1,76 @@
+---
+title: "Linear Regression"
+author: "Cheikh Mbacké BEYE"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+    code_folding: hide
+    toc: yes
+---
+
+## ENVIRONNEMENT DE TRAVAIL
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width=12,
+                      comment = NA,
+                      message = FALSE,
+                      warning=FALSE
+                      
+                      )
+```
+<style>
+div.blue pre {background-color:#ccffcc;}
+div.blue pre.r{background-color:#ccffff;}
+
+## CHARGEMENT DES PACKAGES
+
+</style>
+<div class="blue">
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+```
+</div>
+
+
+Linear regression is a very simple approach for supervised learning. In particular, linear regression is useful tool for predicting a quantitative response. 
+The data set used in this part is the _Advertising_ data. It describes sales( in thousand of units) for a particular product as  function of advertising budgets (in thousand of dollars) for _TV_, _Radio_ and _Newspaper_ media.
+Suppose that our role as data scientist is the answer the following questions based in _Advertising_ data.
+
+* 1 is there a relationship between advertising budget and sales?
+ Our first goal should be to determine whether the data provide evidence of an association between a devrtising expenditure and sales. If the evidence is weak, the one might argue that no money should be spent on adevtising.\
+ 
+* 2 How stong is the relationship between advertising budget and sales?
+  Assuming that there is a relationship between aadvertising budget and sales, we would like to know how strong is the relationship. In other words, given a certaiin advertising budget, can we predict sales accurately? 
+  
+  
+* 3 Which media contibutes to sales?
+Do all three media: _TV_, _Radio_ and _Newspaper_ contribute to sales or do just one or two of the media contribute?  To answer the question, we must find a way to separate out the invidual effects of each medium when we have spent money on all three media.
+
+* 4 How accurately can we estimate the effect of each of medium on sales?
+For every dollar spent on advertising in a particular medium, by what amount will sales increase? How accurately can we predict this amount of increase?
+
+* 5 How accurately can we predict future sales?
+For any given level of television, radio or newspaper advertising, what is our prediction for sales and what is the accuracy of this prediction?
+
+* 6 Is the ralation linear ?
+If there is approximatively a straight-line relationship between adevertising expenditure in the various media and sales, then linear regression is an appropriate tool. If not, then it may still possible to transform the predictor or the response so that linear regression can be used.
+
+* 7 Is there a synergy among the advertising media?
+Perhaps spending $50,000 on television advertising and $50,000 on radio advertising results in more sales than allocating $100,000 to either tekevision or radio individualy. This situation is known as _interaction_ effect.
+
+
+## SIMPLE LINEAR REGRESSION
+
+Simple regression lives up its name: it's a very straightforward approach for predicting a quantitative response _Y_ on the basis of a single predictor variable _X_. It assumes that there is a linear relationship between _X_ and _Y_. Mathematically, we can write this linear relationship as follow 
+$$ Y\approx \beta_0+\beta_1 X$$
+$\beta_0$ and $\beta_1$ are unknown: $\beta_0$ represents the intercept and $\beta_1$ the slope in the linear model. These values are known as the model parameters or coefficients.
+Once we have used our training data to produce estimates $\widehat{\beta_0}$ and $\widehat{\beta}_1$ for the model coefficients, we can predict future value $\widehat{y}$ of _Y_ on the basisof a particular value, _x_ of _X_ by computing 
+$$y= \widehat{\beta_0}+\widehat{\beta_1} x$$
+The main purpose is the computation of the straigntline which is as close as possible of data points.
+The must common approach involves the _least square_ criterion.
+Let $\widehat{y_i}=\widehat{\beta_0}+\widehat{\beta_1}x_i$ be the prediction for _Y_ based on the $i$th value of _X_ . Then $e_i=y_i-\widehat{y_i}$ reprsents the $i$th residual; this is the difference between the obseved response value and the $i$th response value predicted by our linear model.
+The Residual Sum of Squares (RSS) is defined as follow
+$$RSS=\sum_{i=1}^{n}\big(y_i- \widehat{\beta_0}+\widehat{\beta_1} x_i\big)^²$$$\beta_1$

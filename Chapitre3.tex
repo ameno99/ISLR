@@ -1,0 +1,202 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Linear Regression},
+  pdfauthor={Cheikh Mbacké BEYE},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Linear Regression}
+\author{Cheikh Mbacké BEYE}
+\date{2020-08-29}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{environnement-de-travail}{%
+\subsection{ENVIRONNEMENT DE TRAVAIL}\label{environnement-de-travail}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(tidyr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+Linear regression is a very simple approach for supervised learning. In
+particular, linear regression is useful tool for predicting a
+quantitative response. The data set used in this part is the
+\emph{Advertising} data. It describes sales( in thousand of units) for a
+particular product as function of advertising budgets (in thousand of
+dollars) for \emph{TV}, \emph{Radio} and \emph{Newspaper} media. Suppose
+that our role as data scientist is the answer the following questions
+based in \emph{Advertising} data.
+
+\begin{itemize}
+\item
+  1 is there a relationship between advertising budget and sales? Our
+  first goal should be to determine whether the data provide evidence of
+  an association between a devrtising expenditure and sales. If the
+  evidence is weak, the one might argue that no money should be spent on
+  adevtising.\\
+\item
+  2 How stong is the relationship between advertising budget and sales?
+  Assuming that there is a relationship between aadvertising budget and
+  sales, we would like to know how strong is the relationship. In other
+  words, given a certaiin advertising budget, can we predict sales
+  accurately?
+\item
+  3 Which media contibutes to sales? Do all three media: \emph{TV},
+  \emph{Radio} and \emph{Newspaper} contribute to sales or do just one
+  or two of the media contribute? To answer the question, we must find a
+  way to separate out the invidual effects of each medium when we have
+  spent money on all three media.
+\item
+  4 How accurately can we estimate the effect of each of medium on
+  sales? For every dollar spent on advertising in a particular medium,
+  by what amount will sales increase? How accurately can we predict this
+  amount of increase?
+\item
+  5 How accurately can we predict future sales? For any given level of
+  television, radio or newspaper advertising, what is our prediction for
+  sales and what is the accuracy of this prediction?
+\item
+  6 Is the ralation linear ? If there is approximatively a straight-line
+  relationship between adevertising expenditure in the various media and
+  sales, then linear regression is an appropriate tool. If not, then it
+  may still possible to transform the predictor or the response so that
+  linear regression can be used.
+\item
+  7 Is there a synergy among the advertising media? Perhaps spending
+  \$50,000 on television advertising and \$50,000 on radio advertising
+  results in more sales than allocating \$100,000 to either tekevision
+  or radio individualy. This situation is known as \emph{interaction}
+  effect.
+\end{itemize}
+
+\hypertarget{simple-linear-regression}{%
+\subsection{SIMPLE LINEAR REGRESSION}\label{simple-linear-regression}}
+
+Simple regression lives up its name: it's a very straightforward
+approach for predicting a quantitative response \emph{Y} on the basis of
+a single predictor variable \emph{X}. It assumes that there is a linear
+relationship between \emph{X} and \emph{Y}. Mathematically, we can write
+this linear relationship as follow \[ Y\approx \beta_0+\beta_1 X\]
+\(\beta_0\) and \(\beta_1\) are unknown: \(\beta_0\) represents the
+intercept and \(\beta_1\) the slope in the linear model. These values
+are known as the model parameters or coefficients. Once we have used our
+training data to produce estimates \(\widehat{\beta_0}\) and
+\(\widehat{\beta}_1\) for the model coefficients, we can predict future
+value \(\widehat{y}\) of \emph{Y} on the basisof a particular value,
+\emph{x} of \emph{X} by computing
+\[y= \widehat{\beta_0}+\widehat{\beta_1} x\] The main purpose is the
+computation of the straigntline which is as close as possible of data
+points. The must common approach involves the \emph{least square}
+criterion. Let \(\widehat{y_i}=\widehat{\beta_0}+\widehat{\beta_1}x_i\)
+be the prediction for \emph{Y} based on the \(i\)th value of \emph{X} .
+Then \(e_i=y_i-\widehat{y_i}\) reprsents the \(i\)th residual; this is
+the difference between the obseved response value and the \(i\)th
+response value predicted by our linear model. The Residual Sum of
+Squares (RSS) is defined as follow
+\[RSS=\sum_{i=1}^{n}\big(y_i- \widehat{\beta_0}+\widehat{\beta_1} x_i\big)^²\]\(\beta_1\)
+
+\end{document}

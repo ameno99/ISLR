@@ -1,14 +1,21 @@
 ---
 title: "Linear Regression"
 author: "Cheikh Mbacké BEYE"
-date: '`r Sys.Date()`'
+date: "`r Sys.Date()`"
 output:
   html_document:
     code_folding: hide
     toc: yes
+    number_sections: TRUE
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+      
+     
+
 ---
 
-## ENVIRONNEMENT DE TRAVAIL
+# ENVIRONNEMENT DE TRAVAIL
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
@@ -23,7 +30,7 @@ knitr::opts_chunk$set(echo = TRUE,
 div.blue pre {background-color:#ccffcc;}
 div.blue pre.r{background-color:#ccffff;}
 
-## CHARGEMENT DES PACKAGES
+# CHARGEMENT DES PACKAGES
 
 </style>
 <div class="blue">
@@ -31,9 +38,12 @@ div.blue pre.r{background-color:#ccffff;}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(fst)
+library(readr)
 ```
 </div>
 
+# LINEAR REGRESSION
 
 Linear regression is a very simple approach for supervised learning. In particular, linear regression is useful tool for predicting a quantitative response. 
 The data set used in this part is the _Advertising_ data. It describes sales( in thousand of units) for a particular product as  function of advertising budgets (in thousand of dollars) for _TV_, _Radio_ and _Newspaper_ media.
@@ -62,7 +72,7 @@ If there is approximatively a straight-line relationship between adevertising ex
 Perhaps spending $50,000 on television advertising and $50,000 on radio advertising results in more sales than allocating $100,000 to either tekevision or radio individualy. This situation is known as _interaction_ effect.
 
 
-## SIMPLE LINEAR REGRESSION
+## Simple regression
 
 Simple regression lives up its name: it's a very straightforward approach for predicting a quantitative response _Y_ on the basis of a single predictor variable _X_. It assumes that there is a linear relationship between _X_ and _Y_. Mathematically, we can write this linear relationship as follow 
 $$ Y\approx \beta_0+\beta_1 X$$
@@ -74,3 +84,168 @@ The must common approach involves the _least square_ criterion.
 Let $\widehat{y_i}=\widehat{\beta_0}+\widehat{\beta_1}x_i$ be the prediction for _Y_ based on the $i$th value of _X_ . Then $e_i=y_i-\widehat{y_i}$ reprsents the $i$th residual; this is the difference between the obseved response value and the $i$th response value predicted by our linear model.
 The Residual Sum of Squares (RSS) is defined as follow
 $$RSS=\sum_{i=1}^{n}\big(y_i- \widehat{\beta_0}+\widehat{\beta_1} x_i\big)^²$$$\beta_1$
+<<<<<<< HEAD
+=======
+The least square approach choses $\beta_0$ and $\beta_1$ to minimize the RSS.
+We can easily demonstrate that the minimizers are defined as follow
+$$\beta_1=\frac{\sum_{i=1}^{n}\big(y_i-\bar{y}\big)\big(x_i-\bar{x}\big)}{\sum_{i=1}^{n}\big(x_i-\bar{x}\big)^2}$$
+$$\beta_0=\bar{y}-\beta_1\bar{x}$$
+
+### Importations des données et traitement
+
+
+</style>
+<div class='blue'>
+```{r,fig.width=12}
+Advertising <- read_csv('Advertising.csv')
+str(Advertising)
+skimr::skim(Advertising)
+par(mfrow=c(1,3))
+with(Advertising,
+     plot(TV,Sales,pch=19)
+    )
+with(Advertising,
+     plot(Radio,Sales,pch=19)
+    )
+with(Advertising,
+     plot(Newspaper,Sales,pch=19)
+    )
+```
+</div>
+
+Dans le cadre de la regression linéaire simple, la droite de regression passe par le barycentre du nuage de points formés $(x_i,y_i)$.
+
+</style>
+<div class='blue'>
+```{r}
+attach(Advertising)
+(beta1_TV=cov(Sales,TV)/var(TV))
+(beta0_TV=mean(Sales)-beta1_TV*mean(TV))
+(beta1_Radio=cov(Sales,Radio)/var(Radio))
+(beta0_Radio=mean(Sales)-beta1_Radio*mean(Radio))
+(beta1_Newspaper=cov(Sales,Newspaper)/var(Newspaper))
+(beta0_Newspaper=mean(Sales)-beta1_Newspaper*mean(Newspaper))
+SalesTV_hat=beta1_TV*TV+beta0_TV
+SalesRadio_hat=beta1_Radio*Radio+beta0_Radio
+SalesNewspaper_hat=beta1_Newspaper*Newspaper+beta0_Newspaper
+par(mfrow=c(1,3))
+plot(TV,
+     Sales,
+     pch=19,
+     frame.plot = FALSE
+     )
+abline(b=beta1_TV,
+       a=beta0_TV,
+       col='tomato4',
+       lwd=3
+       )
+abline(h=mean(Sales),
+       lty=2,
+       col='light blue',
+       lwd=2
+       )
+abline(v=mean(TV),
+       lty=2,
+       col='light blue',
+       lwd=2
+       )
+plot(Radio,
+     Sales,
+     pch=19,
+     frame.plot = FALSE
+     )
+abline(b=beta1_Radio,
+       a=beta0_Radio,
+       col='tomato4',
+       lwd=3
+       )
+abline(h=mean(Sales),
+       lty=2,
+       col='light blue',
+       lwd=2
+       )
+abline(v=mean(Radio),
+       lty=2,
+       col='light blue',
+       lwd=2
+       )
+plot(Newspaper,
+     Sales,
+     pch=19,
+     frame.plot = FALSE
+     )
+abline(b=beta1_Newspaper,
+       a=beta0_Newspaper,
+       col='tomato4',
+       lwd=3
+       )
+abline(h=mean(Sales),
+       lty=2,
+       col='light blue',
+       lwd=2
+       )
+abline(v=mean(Newspaper),
+       lty=2,
+       col='light blue',
+       lwd=2
+       )
+(reg_TV <- lm(Sales~TV,data = Advertising))
+(reg_Radio <- lm(Sales~Radio,data = Advertising))
+(reg_Newspaper <- lm(Sales~Newspaper,data = Advertising))
+par(mfrow=c(1,3))
+plot(TV,
+     Sales,
+     pch=19,
+     frame = FALSE
+     )
+abline(reg_TV,
+       col='purple',
+       lwd=2
+       )
+segments(TV,Sales,TV,SalesTV_hat,col="tomato4")
+plot(Radio,
+     Sales,
+     pch=19,
+     frame.plot = FALSE
+     )
+abline(reg_Radio,
+       col='purple',
+       lwd=2
+       )
+segments(Radio,Sales,Radio,SalesRadio_hat,col="tomato4")
+plot(Newspaper,
+     Sales,
+     pch=19,
+     frame.plot = FALSE
+     )
+abline(reg_Newspaper,
+       lwd=2,
+       col='purple'
+       )
+segments(Newspaper,Sales,Newspaper,SalesNewspaper_hat,col="tomato4")
+par(mfrow=c(1,3))
+pTV <- ggplot(data=Advertising,
+       mapping = aes(x=TV,y=Sales)
+       )+
+  geom_point(col='red',pch=19,frame=FALSE)+
+  geom_pointrange(aes(ymin=SalesTV_hat,ymax=Sales),col='light blue')+
+  geom_line(aes(y=SalesTV_hat),col='red')+
+  theme_classic()
+pRadio <- ggplot(data=Advertising,
+       mapping = aes(x=Radio,y=Sales)
+       )+
+  geom_point(col='red',pch=19,frame=FALSE)+
+  geom_pointrange(aes(ymin=SalesRadio_hat,ymax=Sales),col='light blue')+
+  geom_line(aes(y=SalesRadio_hat),col='red')+
+  theme_classic()
+pNewspaper <- ggplot(data=Advertising,
+       mapping = aes(x=Newspaper,y=Sales)
+       )+
+  geom_point(col='red',pch=19,frame=FALSE)+
+  geom_pointrange(aes(ymin=SalesNewspaper_hat,ymax=Sales),col='light blue')+
+  geom_line(aes(y=SalesNewspaper_hat),col='red')+
+  theme_classic()
+gridExtra::grid.arrange(pTV,pRadio,pNewspaper,ncol=3)
+```
+</div>
+

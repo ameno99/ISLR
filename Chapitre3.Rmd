@@ -77,14 +77,14 @@ Perhaps spending $50,000 on television advertising and $50,000 on radio advertis
 Simple regression lives up its name: it's a very straightforward approach for predicting a quantitative response _Y_ on the basis of a single predictor variable _X_. It assumes that there is a linear relationship between _X_ and _Y_. Mathematically, we can write this linear relationship as follow 
 $$ Y\approx \beta_0+\beta_1 X$$
 $\beta_0$ and $\beta_1$ are unknown: $\beta_0$ represents the intercept and $\beta_1$ the slope in the linear model. These values are known as the model parameters or coefficients.
-Once we have used our training data to produce estimates $\widehat{\beta_0}$ and $\widehat{\beta}_1$ for the model coefficients, we can predict future value $\widehat{y}$ of _Y_ on the basisof a particular value, _x_ of _X_ by computing 
+Once we have used our training data to produce estimates $\widehat{\beta_0}$ and $\widehat{\beta}_1$ for the model coefficients, we can predict future value $\widehat{y}$ of _Y_ on the basis of a particular value, _x_ of _X_ by computing 
 $$y= \widehat{\beta_0}+\widehat{\beta_1} x$$
-The main purpose is the computation of the straigntline which is as close as possible of data points.
+The main purpose is the computation of the straight line which is as close as possible of data points.
 The must common approach involves the _least square_ criterion.
-Let $\widehat{y_i}=\widehat{\beta_0}+\widehat{\beta_1}x_i$ be the prediction for _Y_ based on the $i$th value of _X_ . Then $e_i=y_i-\widehat{y_i}$ reprsents the $i$th residual; this is the difference between the obseved response value and the $i$th response value predicted by our linear model.
+Let $\widehat{y_i}=\widehat{\beta_0}+\widehat{\beta_1}x_i$ be the prediction for _Y_ based on the $i$th value of _X_ . Then $e_i=y_i-\widehat{y_i}$ represents the $i$th residual; this is the difference between the observed response value and the $i$th response value predicted by our linear model.
 The Residual Sum of Squares (RSS) is defined as follow
 $$RSS=\sum_{i=1}^{n}\big(y_i- \widehat{\beta_0}+\widehat{\beta_1} x_i\big)^²$$$\beta_1$
-The least square approach choses $\beta_0$ and $\beta_1$ to minimize the RSS.
+The least square approach chooses $\beta_0$ and $\beta_1$ to minimize the RSS.
 We can easily demonstrate that the minimizers are defined as follow
 $$\beta_1=\frac{\sum_{i=1}^{n}\big(y_i-\bar{y}\big)\big(x_i-\bar{x}\big)}{\sum_{i=1}^{n}\big(x_i-\bar{x}\big)^2}$$
 $$\beta_0=\bar{y}-\beta_1\bar{x}$$
@@ -111,7 +111,7 @@ with(Advertising,
 ```
 </div>
 
-Dans le cadre de la regression linéaire simple, la droite de regression passe par le barycentre du nuage de points formés $(x_i,y_i)$.
+The centroid of the  $(x_i,y_i)$ points is one of the straight line .
 
 </style>
 <div class='blue'>
